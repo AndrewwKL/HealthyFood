@@ -3,7 +3,11 @@ library(tidyverse)
 library(moments)
 
 # Leer archivo Excel
-df <- read_excel("C:/Users/andre/Downloads/Opiniones_corregido_numeros_puros.xlsx")
+library(readxl)
+
+# Leer el dataset desde la carpeta del proyecto
+df <- read_excel("Opiniones_corregido_numeros_puros.xlsx")
+
 
 # Revisar nombres de columna (porque R renombra columnas duplicadas)
 names(df)
@@ -14,7 +18,7 @@ df <- df %>%
     Edad = as.numeric(Edad),
     Frecuencia_Consumo = as.numeric(Frecuencia_Consumo),
     Horas_Contenido_Nutricion = as.numeric(Horas_Contenido_Nutricion),
-    Disposicion_Pago_Num = as.numeric(Disposicion_Pago_Num...10)  # Usa esta columna
+    Disposicion_Pago_Num = as.numeric(Disposicion_Pago_Num)  # Usa esta columna
   )
 
 ggplot(df, aes(x = factor(Disposicion_Pago_Num), fill = Sexo)) +
