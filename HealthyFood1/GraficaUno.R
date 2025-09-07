@@ -2,10 +2,6 @@ library(readxl)
 library(tidyverse)
 library(moments)
 
-# Leer archivo Excel
-library(readxl)
-
-# Leer el dataset desde la carpeta del proyecto
 df <- read_excel("Opiniones_corregido_numeros_puros.xlsx")
 
 
