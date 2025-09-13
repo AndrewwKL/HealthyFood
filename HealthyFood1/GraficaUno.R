@@ -295,3 +295,56 @@ ggplot(df, aes(x = `¿Cuántas horas a la semana consumes contenido sobre nutric
   labs(title = "Histograma y Densidad de consumo semanal de contenido sobre nutrición",
        x = "Horas a la semana", y = "Densidad") +
   theme_minimal()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Ajustar el tamaño de la ventana gráfica
+windows(width = 10, height = 7)
+
+# Calcular los cuartiles y la media
+summary_stats <- df %>%
+  group_by(Factores_Influencia) %>%
+  summarise(
+    Q1 = quantile(Edad, 0.25, na.rm = TRUE),
+    Q2 = median(Edad, na.rm = TRUE),
+    Q3 = quantile(Edad, 0.75, na.rm = TRUE),
+    mean = mean(Edad, na.rm = TRUE)
+  )
+
+# Gráfico de Boxplot con media y cuartiles
+p_boxplot <- ggplot(df, aes(x = .data[[ "Factores_Influencia" ]], y = .data[[ "Edad" ]])) +
+  geom_boxplot(fill = "lightblue", color = "darkblue", alpha = 0.6) +
+  stat_summary(fun = "mean", geom = "point", color = "red", size = 3, shape = 18) +  # Añadir la media
+  theme_minimal() +
+  labs(title = "¿Qué valor de la media y la mediana refleja las diferencias en las percepciones de los factores de influencia sobre la comida saludable?",
+       x = "Factores de Influencia", y = "Edad") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +  # Ajustar la rotación de las etiquetas del eje X
+  geom_text(data = summary_stats, aes(x = Factores_Influencia, y = Q1, label = paste("Q1:", round(Q1, 1))), 
+            color = "blue", vjust = -1.5, nudge_y = 1) +  # Separar Q1
+  geom_text(data = summary_stats, aes(x = Factores_Influencia, y = Q2, label = paste("Mediana:", round(Q2, 1))), 
+            color = "blue", vjust = -2, nudge_y = 10) +  # Separar Mediana más arriba
+  geom_text(data = summary_stats, aes(x = Factores_Influencia, y = Q3, label = paste("Q3:", round(Q3, 1))), 
+            color = "blue", vjust = -1.5, nudge_y = 1) +  # Separar Q3
+  geom_text(data = summary_stats, aes(x = Factores_Influencia, y = mean, label = paste("Media:", round(mean, 1))), 
+            color = "red", vjust = -3, nudge_y = 5)  # Separar Media más arriba
+
+# Mostrar el gráfico
+print(p_boxplot)
