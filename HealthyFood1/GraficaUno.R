@@ -348,3 +348,8 @@ p_boxplot <- ggplot(df, aes(x = .data[[ "Factores_Influencia" ]], y = .data[[ "E
 
 # Mostrar el gráfico
 print(p_boxplot)
+
+
+
+
+
